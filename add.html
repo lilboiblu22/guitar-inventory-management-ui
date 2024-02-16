@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<style>
+  *{
+    padding: 0;
+    margin: 0;
+}
+
+body {
+  font-family: Arial, Tahoma, Serif;
+  color: #263238;
+}
+
+nav {
+  display: flex; /* 1 */
+  justify-content: space-between; /* 2 */
+  padding: 1rem 2rem; /* 3 */
+  background: #F8EACA; /* 4 */
+}
+
+nav ul {
+  display: flex; /* 5 */
+  list-style: none; /* 6 */
+}
+
+nav li {
+  padding-left: 1rem; /* 7! */
+}
+
+nav a {
+  text-decoration: none;
+  color: #0d47a1
+}
+
+button {
+    left: 200px;
+    padding: 10px 20px;
+    background: #D6BE98;
+    font-weight: bold;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+body{
+  background-color: #F8EACA;
+
+}
+</style>
+<html lang = "en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Page</title>
+  </head>
+  <body>
+   <nav>
+    <h2>Guitar Inventory Management</h2>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="add.html">Add</a></li>
+        <li><a href="search.html">Search</a></li>
+        <li><a href="about.html">About</a></li>
+   </nav>
+
+   <h2>Serial Number:  <input type="text" id="serialNumber" name="serialNumber" required></h2> 
+   <br />
+   <h2>Price:      <input type="text" id="price" name="price" required></h2>
+   <br />
+   <h2>Builder:    <input type="text" id="builder" name="builder" required></h2>
+   <br />
+   <h2>Model:      <input type="text" id="model" name="model" required></h2>
+   <br />
+   <h2>Type:       <input type="text" id="type" name="type" required></h2>
+   <br />
+   <h2>Back Wood:  <input type="text" id="backWood" name="backWood" required></h2>
+   <br />
+   <h2>Top Wood:   <input type="text" id="topWood" name="topWood" required></h2>
+   <br />
+   <button type="submitAdd" id="submitAdd" onClick="addGuitar()">Add the Guitar</button>
+
+  </body>
+
+  <script>
+    function addGuitar(){
+        let serialNumber = document.getElementById('serialNumber').value;
+        let price = document.getElementById('price').value;
+        let builder = document.getElementById('builder').value;
+        let model = document.getElementById('model').value;
+        let type = document.getElementById('type').value;
+        let backWood = document.getElementById('backWood').value;
+        let topWood = document.getElementById('topWood').value;
+        let guitar = {
+            serialNumber: serialNumber,
+            price: price,
+            builder: builder,
+            model: model,
+            type: type,
+            backWood: backWood,
+            topWood: topWood
+        }
+        alert(JSON.stringify(guitar));
+    }
+    </script>
+</html>
