@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-
+<header>
+  <title>Search Page</title>
 <style>
   *{
     padding: 0;
@@ -75,63 +76,20 @@ body{
    <br />
    <button type="submitSearch" id="submitSearch" onClick="search()">Search</button>
 
+   <div id = "tableContainer"></div>
+
   </body>
 
   <script>
-    let guitars = [
-        {
-            "serialNumber": "1234",
-            "price": 1000,
-            "builder": "Fender",
-            "model": "Stratocaster",
-            "type": "Electric",
-            "backWood": "Maple",
-            "topWood": "Maple"
-        },
-        {
-            "serialNumber": "5678",
-            "price": 1500,
-            "builder": "Gibson",
-            "model": "Les Paul",
-            "type": "Electric",
-            "backWood": "Mahogany",
-            "topWood": "Maple"
-        },
-        {
-            "serialNumber": "91011",
-            "price": 2000,
-            "builder": "Martin",
-            "model": "D28",
-            "type": "Acoustic",
-            "backWood": "Rosewood",
-            "topWood": "Spruce"
-        },
-        {
-            "serialNumber": "121314",
-            "price": 2500,
-            "builder": "Taylor",
-            "model": "914ce",
-            "type": "Acoustic",
-            "backWood": "Rosewood",
-            "topWood": "Spruce"
-        },
-        {
-            "serialNumber": "151617",
-            "price": 3000,
-            "builder": "Gibson",
-            "model": "Hummingbird",
-            "type": "Acoustic",
-            "backWood": "Mahogany",
-            "topWood": "Mahogany"
-        }
-    ]
 
     function search(){
-        let builder = document.getElementById('builder').value;
-        let model = document.getElementById('model').value;
-        let type = document.getElementById('type').value;
-        let backWood = document.getElementById('backWood').value;
-        let topWood = document.getElementById('topWood').value;
+        let builder = document.getElementById('builder').value || null;
+        let model = document.getElementById('model').value || null;
+        let type = document.getElementById('type').value || null;
+        let backWood = document.getElementById('backWood').value || null;
+        let topWood = document.getElementById('topWood').value || null;
+
+
         let searchGuitar = {
             builder: builder,
             model: model,
@@ -139,20 +97,84 @@ body{
             backWood: backWood,
             topWood: topWood
         }
-        let results = [];
-        for (let i = 0; i < guitars.length; i++){
-            let guitar = guitars[i];
-            let match = true;
-            for (let key in searchGuitar){
-                if (searchGuitar[key] !== guitar[key]){
-                    match = false;
-                }
+
+        fetch('http://localhost:8080/inventory/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(searchGuitar)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            let tableContainer = document.getElementById('tableContainer');
+
+            if (tableContainer.firstChild){
+                tableContainer.removeChild(tableContainer.firstChild);
             }
-            if (match){
-                results.push(guitar);
-            }
-        }
-        alert(JSON.stringify(results));
-    }
+
+            let table = document.createElement('table');
+            let thead = document.createElement('thead');
+            let tbody = document.createElement('tbody');
+            let tr = document.createElement('tr');
+            let th1 = document.createElement('th');
+            let th2 = document.createElement('th');
+            let th3 = document.createElement('th');
+            let th4 = document.createElement('th');
+            let th5 = document.createElement('th');
+            let th6 = document.createElement('th');
+            let th7 = document.createElement('th');
+            th1.innerHTML = 'Serial Number';
+            th2.innerHTML = 'Price';
+            th3.innerHTML = 'Builder';
+            th4.innerHTML = 'Model';
+            th5.innerHTML = 'Type';
+            th6.innerHTML = 'Back Wood';
+            th7.innerHTML = 'Top Wood';
+            tr.appendChild(th1);
+            tr.appendChild(th2);
+            tr.appendChild(th3);
+            tr.appendChild(th4);
+            tr.appendChild(th5);
+            tr.appendChild(th6);
+            tr.appendChild(th7);
+            thead.appendChild(tr);
+            table.appendChild(thead);
+            data.forEach(guitar => {
+                let tr = document.createElement('tr');
+                let td1 = document.createElement('td');
+                let td2 = document.createElement('td');
+                let td3 = document.createElement('td');
+                let td4 = document.createElement('td');
+                let td5 = document.createElement('td');
+                let td6 = document.createElement('td');
+                let td7 = document.createElement('td');
+                td1.innerHTML = guitar.serialNumber;
+                td2.innerHTML = guitar.price;
+                td3.innerHTML = guitar.builder;
+                td4.innerHTML = guitar.model;
+                td5.innerHTML = guitar.type;
+                td6.innerHTML = guitar.backWood;
+                td7.innerHTML = guitar.topWood;
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
+                tr.appendChild(td7);
+                tbody.appendChild(tr);
+            });
+            tableContainer.appendChild(table);
+            table.appendChild(tbody);
+        })
+        .catch(error => {
+            alert("Failed to search for the guitar!")
+        });
+
+      }
+        
     </script>
 </html>
