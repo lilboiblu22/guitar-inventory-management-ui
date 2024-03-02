@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<header>
+  <title>Add Page</title>
+</header>
 <style>
   *{
     padding: 0;
@@ -83,12 +86,25 @@ body{
   <script>
     function addGuitar(){
         let serialNumber = document.getElementById('serialNumber').value;
-        let price = document.getElementById('price').value;
+        let priceValue = document.getElementById('price').value;
         let builder = document.getElementById('builder').value;
         let model = document.getElementById('model').value;
         let type = document.getElementById('type').value;
         let backWood = document.getElementById('backWood').value;
         let topWood = document.getElementById('topWood').value;
+
+        let price = parseFloat(priceValue);
+
+        if (isNaN(price)){
+            alert("Please enter a valid price");
+            return false;
+        }
+
+        if (serialNumber === "" || price === "" || builder === "" || model === "" || type === "" || backWood === "" || topWood === ""){
+            alert("Please fill in all the fields");
+            return false;
+        }
+
         let guitar = {
             serialNumber: serialNumber,
             price: price,
@@ -98,7 +114,23 @@ body{
             backWood: backWood,
             topWood: topWood
         }
-        alert(JSON.stringify(guitar));
-    }
+
+        fetch ('https://c322-spring2024-homework2-latest-2hm2.onrender.com', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(guitar)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            alert("The Guitar was added to the system!");
+        })
+        .catch(error => {
+            console.log("Error: ", error);
+            alert("Something went wrong. Please try again or contact the customer support team.");
+        });
+        }
     </script>
 </html>
