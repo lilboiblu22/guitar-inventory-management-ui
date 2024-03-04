@@ -87,6 +87,8 @@ body{
   </body>
 
   <script>
+
+    let host = "https://c322-spring2024-homework2-latest-2hm2.onrender.com";
     function addGuitar(){
         let serialNumber = document.getElementById('serialNumber').value;
         let priceValue = document.getElementById('price').value;
@@ -118,7 +120,7 @@ body{
             topWood: topWood
         }
 
-        fetch ('https://c322-spring2024-homework2-latest-2hm2.onrender.com/inventory/add', {
+        fetch (host + '/inventory/add', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
