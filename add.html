@@ -89,7 +89,7 @@ body{
   <script>
 
     let host = "https://c322-spring2024-homework2-latest-2hm2.onrender.com";
-    function addGuitar(){
+    async function addGuitar(){
         let serialNumber = document.getElementById('serialNumber').value;
         let priceValue = document.getElementById('price').value;
         let builder = document.getElementById('builder').value;
@@ -139,8 +139,6 @@ body{
             console.log(error);
             alert("Failed to add guitar");
         }
-
-
         }
     </script>
 </html>
