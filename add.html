@@ -120,22 +120,27 @@ body{
             topWood: topWood
         }
 
-        fetch (host + '/inventory/add', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(guitar)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            alert("The Guitar was added to the system!");
-        })
-        .catch(error => {
-            console.log("Error: ", error);
-            alert("Something went wrong. Please try again or contact the customer support team.");
-        });
+        try{
+          let response = fetch(host + '/inventory/add', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(guitar)
+          });
+
+          if (!response.ok){
+              throw new Error('HTTP error, status =  ' + response.status);
+          }
+          let result = response.json();
+          console.log(result);
+          alert("Guitar added successfully");
+        } catch (error){
+            console.log(error);
+            alert("Failed to add guitar");
+        }
+
+
         }
     </script>
 </html>

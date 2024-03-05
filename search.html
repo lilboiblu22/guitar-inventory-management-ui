@@ -83,7 +83,7 @@ body{
   <script>
     let host = "https://c322-spring2024-homework2-latest-2hm2.onrender.com";
 
-    function search(){
+        async function search(){
         let builder = document.getElementById('builder').value || null;
         let model = document.getElementById('model').value || null;
         let type = document.getElementById('type').value || null;
@@ -99,16 +99,21 @@ body{
             topWood: topWood
         }
 
-        fetch(host + '/inventory/search', {
-            method: 'GET',
+        try{
+          let response = await fetch(host + '/inventory/search', {
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify(searchGuitar)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
+          });
+          if (!response.ok){
+            throw new Error('HTTP error, status = ' + response.status);
+          }
+          let data = await response.json();
+          console.log(data);
+        
+        
 
             let tableContainer = document.getElementById('tableContainer');
 
@@ -170,10 +175,9 @@ body{
             });
             tableContainer.appendChild(table);
             table.appendChild(tbody);
-        })
-        .catch(error => {
-            alert("Failed to search for the guitar!")
-        });
+        } catch (error){
+            console.error('Error:', error);
+        }
 
       }
         
