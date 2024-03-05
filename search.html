@@ -105,7 +105,8 @@ body{
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(searchGuitar)
+            body: JSON.stringify(searchGuitar),
+            mode: 'no-cors'
           });
           if (!response.ok){
             throw new Error('HTTP error, status = ' + response.status);

@@ -126,7 +126,8 @@ body{
               headers: {
                   'Content-Type': 'application/json'
               },
-              body: JSON.stringify(guitar)
+              body: JSON.stringify(guitar),
+              modde: 'no-cors'
           });
 
           if (!response.ok){
