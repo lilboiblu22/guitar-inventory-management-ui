@@ -121,7 +121,7 @@ body{
         }
 
         try{
-          let response = fetch(host + '/inventory/add', {
+          let response = await fetch(host + '/inventory/add', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
@@ -132,7 +132,7 @@ body{
           if (!response.ok){
               throw new Error('HTTP error, status =  ' + response.status);
           }
-          let result = response.json();
+          let result = await response.json();
           console.log(result);
           alert("Guitar added successfully");
         } catch (error){
