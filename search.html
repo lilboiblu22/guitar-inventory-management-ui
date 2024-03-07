@@ -81,8 +81,9 @@ body{
   </body>
 
   <script>
-    let host = 'https://c322-spring2024-homework2-latest-2hm2.onrender.com';
+    //let host = 'https://c322-spring2024-homework2-latest-2hm2.onrender.com';
 
+    let host = 'http://localhost:8080';
         async function search(){
         let builder = document.getElementById('builder').value || null;
         let model = document.getElementById('model').value || null;
@@ -106,7 +107,6 @@ body{
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(searchGuitar),
-            mode: 'no-cors'
           });
           if (!response.ok){
             throw new Error('HTTP error, status = ' + response.status);
