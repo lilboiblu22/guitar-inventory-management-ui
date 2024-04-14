@@ -1,11 +1,8 @@
 const mode = 0;
 
-const host_local = 'http://localhost:3000';
-const host_remote = 'https://c322-spring2024-homework2-latest-lnmc.onrender.com';
+let host = 'https://c322-spring2024-homework2-latest-lnmc.onrender.com';
 
-function getHost() {
-    return mode === 0 ? host_local : host_remote;
-}
+
 
 function isLoggedIn() {
     if(localStorage.getItem('token')) {
@@ -31,7 +28,7 @@ function removeTheToken() {
 
 let configuration = {
     isLoggedIn: () => isLoggedIn(),
-    host: () => getHost(),
+    host: () => host,
     token: () => getTheToken()
 };
 
@@ -61,7 +58,7 @@ async function login(){
         body: JSON.stringify(customer)
     };
     try{
-        let response = await fetch(getHost() + '/signin', request);
+        let response = await fetch(host + '/signin', request);
         if (response.status == 200) {
             alert("The login was successful");
             const token = await response.text();

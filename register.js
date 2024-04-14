@@ -1,4 +1,4 @@
-
+let host = 'https://c322-spring2024-homework2-latest-lnmc.onrender.com';
 
 async function signup() {
     let email = document.getElementById("email").value;
@@ -13,7 +13,7 @@ async function signup() {
         body: JSON.stringify(customer)
       };
       try {
-        let response = await fetch(getHost() + "/signup", request);
+        let response = await fetch(host + "/signup", request);
         if(response.status == 200) {  
             alert("The registration was successful!")
             location.href = "login.html";
