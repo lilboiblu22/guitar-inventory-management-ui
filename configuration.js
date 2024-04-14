@@ -1,7 +1,7 @@
 const mode = 0;
 
 const host_local = 'http://localhost:3000';
-const host_remote = 'https://c322-spring2024-homework2-latest-2hm2.onrender.com';
+const host_remote = 'https://c322-spring2024-homework2-latest-lnmc.onrender.com';
 
 function getHost() {
     return mode === 0 ? host_local : host_remote;
