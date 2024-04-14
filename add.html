@@ -3,7 +3,7 @@
   <title>Add Page</title>
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="navbar.css">
 </header>
 <style>
   *{
@@ -14,27 +14,6 @@
 body {
   font-family: Arial, Tahoma, Serif;
   color: #263238;
-}
-
-nav {
-  display: flex; /* 1 */
-  justify-content: space-between; /* 2 */
-  padding: 1rem 2rem; /* 3 */
-  background: #F8EACA; /* 4 */
-}
-
-nav ul {
-  display: flex; /* 5 */
-  list-style: none; /* 6 */
-}
-
-nav li {
-  padding-left: 1rem; /* 7! */
-}
-
-nav a {
-  text-decoration: none;
-  color: #0d47a1
 }
 
 button {
@@ -59,14 +38,13 @@ body{
     <title>Add Page</title>
   </head>
   <body>
-   <nav>
-    <h2>Guitar Inventory Management</h2>
-    <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="add.html">Add</a></li>
-        <li><a href="search.html">Search</a></li>
-        <li><a href="about.html">About</a></li>
-   </nav>
+    <ul class="topnav">
+      <li><a  href="index.html">Home</a></li>
+      <li><a href="add.html">Add Guitar</a></li>        
+      <li><a href="search.html">Search Guitar</a></li>
+      <li><a href="about.html">About</a></li>
+      <li class="right"><a  class="active" href="login.html">Login</a></li>
+  </ul>
 
    <h2>Serial Number:  <input type="text" id="serialNumber" name="serialNumber" required></h2> 
    <br />
@@ -86,10 +64,10 @@ body{
 
   </body>
 
+  <script src="configuration.js"></script>
   <script>
 
-    let host = 'https://c322-spring2024-homework2-latest-2hm2.onrender.com';
-    //let host = 'http://localhost:8080';
+    let host = getHost();
     async function addGuitar(){
         let serialNumber = document.getElementById('serialNumber').value;
         let priceValue = document.getElementById('price').value;
@@ -125,7 +103,8 @@ body{
           let response = await fetch(host + '/inventory/add', {
               method: 'POST',
               headers: {
-                  'Content-Type': 'application/json'
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer  + ${conifguration.token()}'
               },
               body: JSON.stringify(guitar),
           });
@@ -133,6 +112,9 @@ body{
           if (!response.ok){
               throw new Error('HTTP error, status =  ' + response.status);
           }
+          if (response.status === 401){
+            logout();
+           }
           let result = await response.json();
           console.log(result);
           alert("Guitar added successfully");
