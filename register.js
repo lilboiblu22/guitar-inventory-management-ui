@@ -1,3 +1,5 @@
+
+//changed from dynamic host to static host
 let host = 'https://c322-spring2024-homework2-latest-lnmc.onrender.com';
 
 async function signup() {
